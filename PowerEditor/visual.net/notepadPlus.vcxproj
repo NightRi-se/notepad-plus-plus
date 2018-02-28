@@ -559,6 +559,7 @@ copy ..\src\contextMenu.xml ..\bin64\contextMenu.xml
     <ClInclude Include="..\src\WinControls\ContextMenu\ContextMenu.h" />
     <ClInclude Include="..\src\WinControls\PluginsAdmin\pluginsAdmin.h" />
     <ClInclude Include="..\src\WinControls\PluginsAdmin\pluginsAdminRes.h" />
+    <ClInclude Include="..\src\WinControls\StaticDialog\RunDlg\resource.h" />
     <ClInclude Include="..\src\WinControls\TabBar\ControlsTab.h" />
     <ClInclude Include="..\src\WinControls\DockingWnd\Docking.h" />
     <ClInclude Include="..\src\WinControls\DockingWnd\DockingCont.h" />
