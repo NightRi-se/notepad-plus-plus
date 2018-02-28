@@ -54,7 +54,7 @@ DWORD WINAPI Notepad_plus::monitorFileOnChange(void * params)
 
 	::PathRemoveFileSpecW(folderToMonitor);
 	
-	const DWORD dwNotificationFlags = FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_FILE_NAME;
+	const DWORD dwNotificationFlags = FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_SIZE;
 
 	// Create the monitor and add directory to watch.
 	CReadDirectoryChanges changes;
@@ -224,7 +224,7 @@ BufferID Notepad_plus::doOpen(const generic_string& fileName, bool isRecursive, 
 			{
 				int res = _nativeLangSpeaker.messageBox("CreateNewFileOrNot",
 					_pPublicInterface->getHSelf(),
-					TEXT("\"$INT_REPLACE$\" doesn't exist. Create it?."),
+					TEXT("\"$STR_REPLACE$\" doesn't exist. Create it?"),
 					TEXT("Create new file"),
 					MB_YESNO,
 					0,
@@ -241,7 +241,7 @@ BufferID Notepad_plus::doOpen(const generic_string& fileName, bool isRecursive, 
 					{
 						_nativeLangSpeaker.messageBox("CreateNewFileError",
 							_pPublicInterface->getHSelf(),
-							TEXT("Cannot create the file \"$INT_REPLACE$\"."),
+							TEXT("Cannot create the file \"$STR_REPLACE$\"."),
 							TEXT("Create new file"),
 							MB_OK,
 							0,
@@ -396,7 +396,7 @@ BufferID Notepad_plus::doOpen(const generic_string& fileName, bool isRecursive, 
         {
 			_nativeLangSpeaker.messageBox("OpenFileError",
 				_pPublicInterface->getHSelf(),
-				TEXT("Can not open file \"$INT_REPLACE$\"."),
+				TEXT("Can not open file \"$STRT_REPLACE$\"."),
 				TEXT("ERROR"),
 				MB_OK,
 				0,
@@ -1268,7 +1268,7 @@ bool Notepad_plus::fileSave(BufferID id)
 			{
 				int res = _nativeLangSpeaker.messageBox("FileBackupFailed",
 					_pPublicInterface->getHSelf(),
-					TEXT("The previous version of the file could not be saved into the backup directory at \"$INT_REPLACE$\".\r\rDo you want to save the current file anyways?"),
+					TEXT("The previous version of the file could not be saved into the backup directory at \"$STR_REPLACE$\".\r\rDo you want to save the current file anyways?"),
 					TEXT("File Backup Failed"),
 					MB_YESNO | MB_ICONERROR,
 					0,

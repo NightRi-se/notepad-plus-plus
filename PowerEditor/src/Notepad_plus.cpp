@@ -1113,13 +1113,25 @@ bool Notepad_plus::replaceInOpenedFiles() {
 
 
 	if (nbTotal < 0)
-		_findReplaceDlg.setStatusbarMessage(TEXT("Replace in Opened Files: The regular expression to search is formed badly"), FSNotFound);
+	{
+		generic_string msg = _nativeLangSpeaker.getLocalizedStrFromID("find-status-replaceinfiles-re-malformed", TEXT("Replace in Opened Files: The regular expression is malformed."));
+		_findReplaceDlg.setStatusbarMessage(msg, FSNotFound);
+	}
 	else
 	{
 		if (nbTotal)
 			enableCommand(IDM_FILE_SAVEALL, true, MENU | TOOLBAR);
-		TCHAR result[64];
-		wsprintf(result, TEXT("Replace in Opened Files: %s occurrences replaced."), commafyInt(nbTotal).c_str());
+
+		generic_string result;
+		if (nbTotal == 1)
+		{
+			result = _nativeLangSpeaker.getLocalizedStrFromID("find-status-replaceinopenedfiles-1-replaced", TEXT("Replace in Opened Files: 1 occurrence was replaced."));
+		}
+		else
+		{
+			result = _nativeLangSpeaker.getLocalizedStrFromID("find-status-replaceinopenedfiles-nb-replaced", TEXT("Replace in Opened Files: $INT_REPLACE$ occurrences were replaced."));
+			result = stringReplace(result, TEXT("$INT_REPLACE$"), std::to_wstring(nbTotal));
+		}
 		_findReplaceDlg.setStatusbarMessage(result, FSMessage);
 	}
 	return true;
@@ -1549,9 +1561,17 @@ bool Notepad_plus::replaceInFiles()
 	_invisibleEditView.setCurrentBuffer(oldBuf);
 	_pEditView = pOldView;
 
-	TCHAR msg[128];
-	wsprintf(msg, TEXT("Replace in Files: %s occurrences replaced"), commafyInt(nbTotal).c_str());
-	_findReplaceDlg.setStatusbarMessage(msg, FSMessage);
+	generic_string result;
+	if (nbTotal == 1)
+	{
+		result = _nativeLangSpeaker.getLocalizedStrFromID("find-status-replaceinfiles-1-replaced", TEXT("Replace in Files: 1 occurrence was replaced."));
+	}
+	else
+	{
+		result = _nativeLangSpeaker.getLocalizedStrFromID("find-status-replaceinfiles-nb-replaced", TEXT("Replace in Files: $INT_REPLACE$ occurrences were replaced."));
+		result = stringReplace(result, TEXT("$INT_REPLACE$"), std::to_wstring(nbTotal));
+	}
+	_findReplaceDlg.setStatusbarMessage(result, FSMessage);
 
 	return true;
 }
@@ -3250,7 +3270,7 @@ void Notepad_plus::dropFiles(HDROP hdrop)
 			// display error & do nothing
 			_nativeLangSpeaker.messageBox("DroppingFolderAsProjetModeWarning",
 				_pPublicInterface->getHSelf(),
-				TEXT("You can drop only files or folders but not both, because you're in dropping Folder as Projet mode.\ryou have to enable \"Open all files of folder instead of launching Folder as Workspace on folder dropping\" in \"Default Directory\" section of Preferences dialog to make this operation work."),
+				TEXT("You can only drop files or folders but not both, because you're in dropping Folder as Project mode.\ryou have to enable \"Open all files of folder instead of launching Folder as Workspace on folder dropping\" in \"Default Directory\" section of Preferences dialog to make this operation work."),
 				TEXT("Invalid action"),
 				MB_OK | MB_APPLMODAL);
 		}
@@ -3965,7 +3985,7 @@ bool Notepad_plus::doBlockComment(comment_mode currCommentMode)
 	//The NORMAL MODE is used for all Lexers which have a commentLineSymbol defined.
 	//The ADVANCED MODE is only available for Lexers which do not have a commentLineSymbol but commentStreamSymbols (start/end) defined.
 	//The ADVANCED MODE behaves the same way as the NORMAL MODE (comment/uncomment every single line in the selection range separately)
-	//but uses two smbols to accomplish this.
+	//but uses two symbols to accomplish this.
 	bool isSingleLineAdvancedMode = false;
 
 	if (buf->getLangType() == L_USER)
@@ -4087,7 +4107,7 @@ bool Notepad_plus::doBlockComment(comment_mode currCommentMode)
 		if (avoidIndent)
 			lineIndent = lineStart;
 
-		size_t linebufferSize = lineEnd - lineIndent + comment_length;
+		size_t linebufferSize = lineEnd - lineIndent + 1;
 		TCHAR* linebuf = new TCHAR[linebufferSize];
 
 		_pEditView->getGenericText(linebuf, linebufferSize, lineIndent, lineEnd);
@@ -5889,7 +5909,7 @@ void Notepad_plus::launchDocMap()
 	{
 		_nativeLangSpeaker.messageBox("PrehistoricSystemDetected",
 			_pPublicInterface->getHSelf(),
-			TEXT("It seems you still use a prehistoric system, This feature works only on a modern system, sorry."),
+			TEXT("It seems you still use a prehistoric system. This feature works only on a modern system, sorry."),
 			TEXT("Prehistoric system detected"),
 			MB_OK);
 

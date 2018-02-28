@@ -39,6 +39,7 @@ class ShortcutMapper : public StaticDialog {
 public:
 	ShortcutMapper() : _currentState(STATE_MENU), StaticDialog() {
 		_shortcutFilter = TEXT("");
+		_dialogInitDone = false;
 	};
 	~ShortcutMapper() {};
 
@@ -87,8 +88,8 @@ private:
 	std::vector<size_t> _lastHomeRow;
 	std::vector<size_t> _lastCursorRow;
 
-	const generic_string _defaultInfo = TEXT("No shortcut conflicts for this item.");
-	const generic_string _assignInfo  = TEXT("No conflicts . . .");
+	generic_string _conflictInfoOk;
+	generic_string _conflictInfoEditing;
 
 	std::vector<HFONT> _hGridFonts;
 
@@ -100,6 +101,9 @@ private:
 	};
 	LONG _clientWidth;
 	LONG _clientHeight;
+	LONG _initClientWidth;
+	LONG _initClientHeight;
+	bool _dialogInitDone;
 
 	void initTabs();
 	void initBabyGrid();

@@ -892,7 +892,7 @@ bool NppParameters::reloadStylers(TCHAR* stylePath)
 	{
 		_pNativeLangSpeaker->messageBox("LoadStylersFailed",
 			NULL,
-			TEXT("Load \"$INT_REPLACE$\" failed!"),
+			TEXT("Load \"$STR_REPLACE$\" failed!"),
 			TEXT("Load stylers.xml failed"),
 			MB_OK,
 			0,
@@ -946,15 +946,15 @@ bool NppParameters::reloadLang()
 
 generic_string NppParameters::getSpecialFolderLocation(int folderKind)
 {
-	ITEMIDLIST *pidl;
-	const HRESULT specialLocationResult = SHGetSpecialFolderLocation(NULL, folderKind, &pidl);
-	if (!SUCCEEDED( specialLocationResult))
-		return generic_string();
-	
 	TCHAR path[MAX_PATH];
-	SHGetPathFromIDList(pidl, path);
+	const HRESULT specialLocationResult = SHGetFolderPath(nullptr, folderKind, nullptr, SHGFP_TYPE_CURRENT, path);
 
-	return path;
+	generic_string result;
+	if (SUCCEEDED(specialLocationResult))
+	{
+		result = path;
+	}
+	return result;
 }
 
 
@@ -1165,7 +1165,7 @@ bool NppParameters::load()
 	{
 		_pNativeLangSpeaker->messageBox("LoadStylersFailed",
 			NULL,
-			TEXT("Load \"$INT_REPLACE$\" failed!"),
+			TEXT("Load \"$STR_REPLACE$\" failed!"),
 			TEXT("Load stylers.xml failed"),
 			MB_OK,
 			0,
@@ -3693,6 +3693,8 @@ generic_string NppParameters::getLocPathFromStr(const generic_string & localizat
 		return TEXT("kazakh.xml");
 	if (localizationCode == TEXT("ko") || localizationCode == TEXT("ko-kp") || localizationCode == TEXT("ko-kr"))
 		return TEXT("korean.xml");
+	if (localizationCode == TEXT("ku"))
+		return TEXT("kurdish.xml");
 	if (localizationCode == TEXT("ky"))
 		return TEXT("kyrgyz.xml");
 	if (localizationCode == TEXT("lv"))
