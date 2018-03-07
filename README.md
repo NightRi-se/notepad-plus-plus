@@ -8,7 +8,7 @@ Current list of changes:
 Packaging notes:
 1. Genuine app was downloaded and unzipped (non-installer version)
 2. the exe was recompiled with listed changes above
-3. exe was replaced in the enuine app
+3. exe was replaced in the original app unzipped location
 4. app was opened to create correct xml files
 5. app was packaged using Desktop App Converter (https://docs.microsoft.com/en-us/windows/uwp/porting/desktop-to-uwp-run-desktop-app-converter)
 6. app is published to the store here: https://www.microsoft.com/store/apps/9PLHC123MQWT
