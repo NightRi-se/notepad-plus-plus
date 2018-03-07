@@ -11,7 +11,7 @@ Packaging notes:
 3. exe was replaced in the enuine app
 4. app was opened to create correct xml files
 5. app was packaged using Desktop App Converter (https://docs.microsoft.com/en-us/windows/uwp/porting/desktop-to-uwp-run-desktop-app-converter)
-6. app is published to the store (still pending approval - link will be added when approved)
+6. app is published to the store here: https://www.microsoft.com/store/apps/9PLHC123MQWT
 
 All credit to the original team. All licences stay the same.
 
