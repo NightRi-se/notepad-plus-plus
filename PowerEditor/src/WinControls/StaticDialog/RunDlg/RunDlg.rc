@@ -18,7 +18,7 @@ CAPTION "Run..."
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,121,74,48,14
-    GROUPBOX        "Disabled for Win10s",IDC_MAINTEXT_STATIC,7,10,172,49
+    GROUPBOX        "Disabled due to Store Policies",IDC_MAINTEXT_STATIC,7,10,172,49
 END
 
 
