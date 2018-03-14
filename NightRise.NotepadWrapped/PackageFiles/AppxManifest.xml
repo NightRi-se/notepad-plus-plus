@@ -99,6 +99,7 @@
 			      <uap:FileType>.sql</uap:FileType>
 			      <uap:FileType>.nfo</uap:FileType>
 			      <uap:FileType>.mak</uap:FileType>
+            <uap:FileType>.md</uap:FileType>
           </uap:SupportedFileTypes>
         </uap:FileTypeAssociation>
       </uap:Extension>
