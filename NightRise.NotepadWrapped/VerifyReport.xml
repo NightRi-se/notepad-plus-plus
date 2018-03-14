@@ -1,0 +1,133 @@
+﻿<?xml-stylesheet type="text/xsl" href="CDAA_Output.xsl"?>
+<ConfigData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AppxFile Name="NightRise.NotepadWrapped" Publisher="CN=3600D6FE-CEE8-459A-BFB7-3E2538BB25F5" Version="7.55.1.0">C:\Users\visse\source\nppwrapped\NightRise.NotepadWrapped\NightRise.NotepadWrapped.appx</AppxFile>
+  <Report CreateDate="2018-03-09T18:25:34.858244Z">
+    <ProcessorArchitecture>x64</ProcessorArchitecture>
+    <WindowsVersion>Microsoft Windows NT 10.0.16299.0</WindowsVersion>
+    <CdaaVersion>CDAA_PowerShell, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null</CdaaVersion>
+    <InvokeParams>{"AppxFile": [C:\Users\visse\source\nppwrapped\NightRise.NotepadWrapped\NightRise.NotepadWrapped.appx],"ReportFile": [C:\Users\visse\source\nppwrapped\NightRise.NotepadWrapped\VerifyReport.xml],"OpenReportFileOnExit": [False]}</InvokeParams>
+  </Report>
+  <Flows>
+    <Flow Description="Test for Installed Drivers and Services">
+      <Rules>
+        <Rule>
+          <ServiceType>Registry</ServiceType>
+          <RuleDesc>Kernal mode drivers cannot be installed</RuleDesc>
+          <RuleValue>REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Enum\\.*(\n@=.*)?</RuleValue>
+          <RuleViolationType>GlobalResource</RuleViolationType>
+          <RuleSeverity>Failure</RuleSeverity>
+          <Mitigation>
+            Your app requires a kernel-mode driver or a Windows service. The bridge is suitable for an app,
+            but it does not support a kernel-mode driver or a Windows service that needs to run under a system account.
+            Instead of a Windows service, use a background task.
+            &lt;a href="https://go.microsoft.com/fwlink/?linkid=836884"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+            <Value>Rules invalid for this appx</Value>
+          </Result>
+        </Rule>
+        <Rule>
+          <ServiceType>Registry</ServiceType>
+          <RuleDesc>NT Services can not be installed</RuleDesc>
+          <RuleValue>REGISTRY\\MACHINE\\SYSTEM\\CurrentControlSet\\Services\\[^\\]*]</RuleValue>
+          <RuleViolationType>NTService</RuleViolationType>
+          <RuleSeverity>Failure</RuleSeverity>
+          <Mitigation>Your app requires a kernel-mode driver or a Windows service. The bridge is suitable for an app,
+            but it does not support a kernel-mode driver or a Windows service that needs to run under a system account.
+            Instead of a Windows service, use a background task.
+            &lt;a href="https://go.microsoft.com/fwlink/?linkid=836884"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+            <Value>Rules invalid for this appx</Value>
+          </Result>
+        </Rule>
+      </Rules>
+    </Flow>
+    <Flow Description="Registered File Association Verbs">
+      <Rules>
+        <Rule>
+          <ServiceType>Registry</ServiceType>
+          <RuleDesc>Registered verb warning</RuleDesc>
+          <RuleValue>REGISTRY\\(MACHINE|USER)\\SOFTWARE\\Classes\\.*\\shell\\.*(\n@=.*)?</RuleValue>
+          <RuleViolationType>DDEExec</RuleViolationType>
+          <RuleSeverity>Warning</RuleSeverity>
+          <Mitigation>&lt;a href="https://go.microsoft.com/fwlink/?linkid=836885"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+            <Value>Rules invalid for this appx</Value>
+          </Result>
+        </Rule>
+      </Rules>
+    </Flow>
+    <Flow Description="Validate Appx Manifest">
+      <Rules>
+        <Rule>
+          <ServiceType>Manifest</ServiceType>
+          <RuleDesc>Application Identity Name can't be empty</RuleDesc>
+          <RuleValue>Identity.Name</RuleValue>
+          <RuleViolationType>ManifestValue</RuleViolationType>
+          <RuleSeverity>Failure</RuleSeverity>
+          <Mitigation>&lt;a href="https://go.microsoft.com/fwlink/?linkid=836886"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+          </Result>
+        </Rule>
+        <Rule>
+          <ServiceType>Manifest</ServiceType>
+          <RuleDesc>Application Display Name can't be empty</RuleDesc>
+          <RuleValue>Properties.DisplayName</RuleValue>
+          <RuleViolationType>ManifestValue</RuleViolationType>
+          <RuleSeverity>Failure</RuleSeverity>
+          <Mitigation>&lt;a href="https://go.microsoft.com/fwlink/?linkid=836886"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+          </Result>
+        </Rule>
+      </Rules>
+    </Flow>
+    <Flow Description="Validate security settings">
+      <Rules>
+        <Rule>
+          <ServiceType>ExeChecker</ServiceType>
+          <RuleDesc>EXE cannot request admin elevation</RuleDesc>
+          <RuleValue>requestedExecutionLevel level=\"requireAdministrator\"</RuleValue>
+          <RuleViolationType>AdminElevation</RuleViolationType>
+          <RuleSeverity>Failure</RuleSeverity>
+          <Mitigation>UWP apps must run as interactive user - elevated security permissions are not supported.
+            &lt;a href="https://go.microsoft.com/fwlink/?linkid=836886"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+          </Result>
+        </Rule>
+        <Rule>
+          <ServiceType>ExeChecker</ServiceType>
+          <RuleDesc>EXE cannot request UIAccess</RuleDesc>
+          <RuleValue>requestedExecutionLevel .*uiAccess=\"true\"</RuleValue>
+          <RuleViolationType>UIAccess</RuleViolationType>
+          <RuleSeverity>Failure</RuleSeverity>
+          <Mitigation>UWP apps cannot access protected system UI.
+            &lt;a href="https://go.microsoft.com/fwlink/?linkid=836887"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+          </Result>
+        </Rule>
+      </Rules>
+    </Flow>
+    <Flow Description="Validate App Integrity">
+      <Rules>
+        <Rule>
+          <ServiceType>PEChecker</ServiceType>
+          <RuleDesc>PE Files must contain valid signature</RuleDesc>
+          <RuleValue />
+          <RuleViolationType>SignatureIntegrity</RuleViolationType>
+          <RuleSeverity>Failure</RuleSeverity>
+          <Mitigation>&lt;a href="https://go.microsoft.com/fwlink/?linkid=836888"&gt;click here for mitigation details&lt;/a&gt;</Mitigation>
+          <Result>
+            <Passed>true</Passed>
+            <Value />
+          </Result>
+        </Rule>
+      </Rules>
+    </Flow>
+  </Flows>
+</ConfigData>
