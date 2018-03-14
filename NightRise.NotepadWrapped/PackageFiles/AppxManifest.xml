@@ -55,7 +55,6 @@
 			      <uap:FileType>.htm</uap:FileType>
 			      <uap:FileType>.shtml</uap:FileType>
 			      <uap:FileType>.shtm</uap:FileType>
-			      <uap:FileType>.hta</uap:FileType>
 			      <uap:FileType>.asp</uap:FileType>
 			      <uap:FileType>.aspx</uap:FileType>
 			      <uap:FileType>.css</uap:FileType>
@@ -80,8 +79,6 @@
 			      <uap:FileType>.sh</uap:FileType>
 			      <uap:FileType>.bash</uap:FileType>
 			      <uap:FileType>.bsh</uap:FileType>
-			      <uap:FileType>.bat</uap:FileType>
-			      <uap:FileType>.cmd</uap:FileType>
 			      <uap:FileType>.nsi</uap:FileType>
 			      <uap:FileType>.nsh</uap:FileType>
 			      <uap:FileType>.lua</uap:FileType>
