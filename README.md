@@ -3,7 +3,7 @@ This is an (unofficial) clone for use with Windows Store Publishing
 I have cloned the original repo and published changes to support publishing the app in the windows store. This is required to get notepad++ running on Win10s devices.
 
 Current list of changes:
-1. Removal of the run Diag (you cant open a command prompt on 10s)
+1. Removal of the run Diag (you cant open a command prompt on 10s) - see https://github.com/NightRi-se/notepad-plus-plus/blob/master/PowerEditor/src/WinControls/StaticDialog/RunDlg/RunDlg.rc for most of the required changes.
 
 Packaging notes:
 1. Genuine app was downloaded and unzipped (non-installer version)
