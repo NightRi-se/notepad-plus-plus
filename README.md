@@ -1,4 +1,4 @@
-This is an (unoffical) clone for use with Windows Store Publishing
+This is an (unofficial) clone for use with Windows Store Publishing
 ===================
 I have cloned the original repo and published changes to support publishing the app in the windows store. This is required to get notepad++ running on Win10s devices.
 
