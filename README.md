@@ -1,6 +1,6 @@
-This is a clone for use with Windows Store Publishing
+This is an (unofficial) clone for use with Windows Store Publishing
 ===================
-I have cloned the original repo and published changes to support publishing the app in the windows store. This is retured to get notepad++ running on Win10s devices.
+I have cloned the original repo and published changes to support publishing the app in the windows store. This is required to get notepad++ running on Win10s devices.
 
 Current list of changes:
 1. Removal of the run Diag (you cant open a command prompt on 10s)
@@ -12,7 +12,9 @@ Packaging notes:
 4. app was packaged using Desktop App Converter (https://docs.microsoft.com/en-us/windows/uwp/porting/desktop-to-uwp-run-desktop-app-converter) - see https://github.com/NightRi-se/notepad-plus-plus/wiki/(Re)Packaging-Instructions
 6. app is published to the store here: https://www.microsoft.com/store/apps/9PLHC123MQWT
 
-All credit to the original team. All licences stay the same.
+All credit to the original team, especially @donho. All licences stay the same (GPL unless otherwise stated).
+
+If you like this app in the store, please feel free to add your comments to this thread: https://notepad-plus-plus.org/community/topic/14734/notepad-uwp-package-in-windows-store-almost-there
 
 What is Notepad++ ?
 ===================
