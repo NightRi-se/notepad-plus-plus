@@ -101,6 +101,9 @@
 			<uap:FileType>.nfo</uap:FileType>
 			<uap:FileType>.mak</uap:FileType>
 			<uap:FileType>.md</uap:FileType>
+			<uap:FileType>.ts</uap:FileType>
+			<uap:FileType>.gp</uap:FileType>
+			<uap:FileType>.scss</uap:FileType>
           </uap:SupportedFileTypes>
         </uap:FileTypeAssociation>
       </uap:Extension>
