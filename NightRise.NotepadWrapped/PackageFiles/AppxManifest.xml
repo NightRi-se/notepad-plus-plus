@@ -104,6 +104,12 @@
 			<uap:FileType>.ts</uap:FileType>
 			<uap:FileType>.gp</uap:FileType>
 			<uap:FileType>.scss</uap:FileType>
+			<uap:FileType>.cif</uap:FileType>
+			<uap:FileType>.cif_od</uap:FileType>
+			<uap:FileType>.ins</uap:FileType>
+			<uap:FileType>.res</uap:FileType>
+			<uap:FileType>.lst</uap:FileType>
+			<uap:FileType>.hkl</uap:FileType>
           </uap:SupportedFileTypes>
         </uap:FileTypeAssociation>
       </uap:Extension>
