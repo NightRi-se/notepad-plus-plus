@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 7.57.{build}.0
 image: Visual Studio 2015
 
 
@@ -6,11 +6,9 @@ clone_depth: 1
 
 platform:
     - x64
-    - Win32
 
 configuration:
     - Unicode Release
-    - Unicode Debug
 
 install:
     - if "%platform%"=="x64" set archi=amd64
@@ -26,27 +24,23 @@ build_script:
     - if "%configuration%"=="Unicode Release" set scintilla_debug=
     - nmake NOBOOST=1 %scintilla_debug% -f scintilla.mak
     - cd c:\projects\notepad-plus-plus\PowerEditor\visual.net\
-    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform="%platform%" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=amd64 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
     - cd c:\projects\notepad-plus-plus\
     - ps: >-
-        $nppFileName = "Notepad++.$env:PLATFORM.$env:CONFIGURATION.exe"
+        $nppx64FileName = "Notepad++.x64.$env:CONFIGURATION.exe"
+        $nppw32FileName = "Notepad++.w32.$env:CONFIGURATION.exe"
 
-        if ($env:PLATFORM -eq "x64" -and $env:CONFIGURATION -eq "Unicode Release") {
-            Push-AppveyorArtifact "PowerEditor\bin64\Notepad++.exe" -FileName "$nppFileName"
+        if ($env:CONFIGURATION -eq "Unicode Release") {
+            Push-AppveyorArtifact "PowerEditor\bin64\Notepad++.exe" -FileName "$nppx64FileName"
+            Push-AppveyorArtifact "PowerEditor\bin\Notepad++.exe" -FileName "$nppw32FileName"
         }
 
-        if ($env:PLATFORM -eq "x64" -and $env:CONFIGURATION -eq "Unicode Debug") {
-            Push-AppveyorArtifact "PowerEditor\visual.net\x64\Unicode Debug\Notepad++.exe" -FileName "$nppFileName"
+        if ($env:CONFIGURATION -eq "Unicode Debug") {
+            Push-AppveyorArtifact "PowerEditor\visual.net\x64\Unicode Debug\Notepad++.exe" -FileName "$nppx64FileName"
+            Push-AppveyorArtifact "PowerEditor\visual.net\Unicode Debug\Notepad++.exe" -FileName "$nppw32FileName"
         }
 
-        if ($env:PLATFORM -eq "Win32" -and $env:CONFIGURATION -eq "Unicode Release") {
-            Push-AppveyorArtifact "PowerEditor\bin\Notepad++.exe" -FileName "$nppFileName"
-        }
-
-        if ($env:PLATFORM -eq "Win32" -and $env:CONFIGURATION -eq "Unicode Debug") {
-            Push-AppveyorArtifact "PowerEditor\visual.net\Unicode Debug\Notepad++.exe" -FileName "$nppFileName"
-        }
-
-        Push-AppveyorArtifact "scintilla\bin\SciLexer.dll" -FileName "SciLexer.$env:PLATFORM.$env:CONFIGURATION.dll"
+        Push-AppveyorArtifact "scintilla\bin\SciLexer.dll" -FileName "SciLexer.$env:CONFIGURATION.dll"
