@@ -24,14 +24,14 @@ build_script:
     - if "%configuration%"=="Unicode Release" set scintilla_debug=
     - nmake NOBOOST=1 %scintilla_debug% -f scintilla.mak
     - cd c:\projects\notepad-plus-plus\PowerEditor\visual.net\
-    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=amd64 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=x64 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=Win32 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
     - cd c:\projects\notepad-plus-plus\
     - ps: >-
         $nppx64FileName = "Notepad++.x64.$env:CONFIGURATION.exe"
-        $nppw32FileName = "Notepad++.w32.$env:CONFIGURATION.exe"
+        $nppw32FileName = "Notepad++.Win32.$env:CONFIGURATION.exe"
 
         if ($env:CONFIGURATION -eq "Unicode Release") {
             Push-AppveyorArtifact "PowerEditor\bin64\Notepad++.exe" -FileName "$nppx64FileName"
