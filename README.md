@@ -1,6 +1,7 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/4uq2fo7ki1hhmpk6?svg=true)](https://ci.appveyor.com/project/jakevis/notepad-plus-plus)
 This is an (unofficial) fork for use with Windows Store Publishing
 ===================
+[![Build status](https://ci.appveyor.com/api/projects/status/4uq2fo7ki1hhmpk6?svg=true)](https://ci.appveyor.com/project/jakevis/notepad-plus-plus)
+
 I have cloned the original repo and published changes to support publishing the app in the windows store. This is required to get notepad++ running on Win10s devices.
 
 Current list of changes:
