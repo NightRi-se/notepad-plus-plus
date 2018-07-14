@@ -80,7 +80,7 @@ deploy:
         secure: p7XtTd/eFzMZBPtvGNxZ2v541BXMXlxpziPnp63EOsPIf4E1BndDp0QqR5wuLekg # your encrypted token from GitHub
     artifact: /.*\.appx/
     draft: false
-    prerelease: true
+    prerelease: false
     on:
         branch: master                   # release from master branch only
-        appveyor_repo_tag: false        # deploy on tag push only
+        appveyor_repo_tag: true        # deploy on tag push only
