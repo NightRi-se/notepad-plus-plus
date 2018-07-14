@@ -225,6 +225,7 @@ HMODULE loadSciLexerDll()
 	{
 			::MessageBox(NULL,
 			TEXT("isOK not true"),
+			TEXT("Library verification"),
 			MB_OK | MB_ICONERROR);
 	}
 	if(isOKnr)
@@ -233,6 +234,7 @@ HMODULE loadSciLexerDll()
 
 			::MessageBox(NULL,
 			TEXT("isOKnr true"),
+			TEXT("Library verification"),
 			MB_OK | MB_ICONERROR);
 	}
 
