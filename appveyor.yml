@@ -77,9 +77,7 @@ deploy:
     provider: GitHub
     auth_token:
         secure: p7XtTd/eFzMZBPtvGNxZ2v541BXMXlxpziPnp63EOsPIf4E1BndDp0QqR5wuLekg # your encrypted token from GitHub
-    artifact: 
-        - "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.appx"
-        - "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.appx"
+    artifact: /.*\.appx/
     draft: true
     prerelease: false
     on:
