@@ -177,7 +177,7 @@ LanguageName ScintillaEditView::langNames[L_EXTERNAL+1] = {
 #define SCINTILLA_SIGNER_SUBJECT TEXT("C=FR, S=Ile-de-France, L=Saint Cloud, O=\"Notepad++\", CN=\"Notepad++\"")
 #define SCINTILLA_SIGNER_KEY_ID TEXT("42C4C5846BB675C74E2B2C90C69AB44366401093")
 #define SCINTILLA_SIGNER_DISPLAY_NAME_NR TEXT("NightRise LLC")
-#define SCINTILLA_SIGNER_SUBJECT_NR TEXT ("C=US, S=NV, L=Las Vegas, O=\"NightRise LLC\", CN=\"NightRise LLC\"")
+#define SCINTILLA_SIGNER_SUBJECT_NR TEXT ("C=US, S=NV, L=Las Vegas, O=NightRise LLC, CN=NightRise LLC)
 #define SCINTILLA_SIGNER_KEY_ID_NR TEXT("8F40ED6D76ED0081EF8DC380B8B12A3F50EABA50")
 
 
@@ -221,9 +221,19 @@ HMODULE loadSciLexerDll()
 	{
 		valid = true;
 	}
+	else
+	{
+			::MessageBox(NULL,
+			TEXT("isOK not true"),
+			MB_OK | MB_ICONERROR);
+	}
 	if(isOKnr)
 	{
 		valid = true;
+
+			::MessageBox(NULL,
+			TEXT("isOKnr true"),
+			MB_OK | MB_ICONERROR);
 	}
 
 	if (!valid)
