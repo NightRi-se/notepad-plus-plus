@@ -46,7 +46,7 @@ after_build:
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Identity Name=`"NightRise.NotepadWrapped`" ProcessorArchitecture=`"x64`" Publisher=`"CN=NightRise LLC, O=NightRise LLC, L=Las Vegas, S=NV, C=US`" Version=`"$env:APPVEYOR_BUILD_VERSION`" />"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value (Get-Content "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml.1")
             Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -FileName "AppxManifest_signed.xml"
-            makeappx.exe pack -d "C:\projects\notepad-plus-plus\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.appx" /l
+            makeappx.exe pack -d "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.appx" /l
             
             Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml"
 
@@ -55,7 +55,7 @@ after_build:
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Identity Name=`"NightRise.NotepadWrapped`" ProcessorArchitecture=`"x64`" Publisher=`"CN=3600D6FE-CEE8-459A-BFB7-3E2538BB25F5`" Version=`"$env:APPVEYOR_BUILD_VERSION`" />"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value (Get-Content "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml.1")
             Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -FileName "AppxManifest.xml"
-            makeappx.exe pack -d "C:\projects\notepad-plus-plus\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.appx" /l
+            makeappx.exe pack -d "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.appx" /l
             
 
 
