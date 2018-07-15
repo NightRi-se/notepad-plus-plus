@@ -63,9 +63,12 @@ after_build:
             Push-AppveyorArtifact "PowerEditor\bin64\Notepad++.exe" -FileName "$nppx64FileName"
             Push-AppveyorArtifact "PowerEditor\bin\Notepad++.exe" -FileName "$nppw32FileName"
 
-            Copy-Item "PowerEditor\bin64\Notepad++.exe" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
             Copy-Item "scintilla\bin\SciLexer.dll" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\SciLexer.dll"
 
+            remove-item -Recurse .\NightRise.NotepadWrapped\PackageFiles\plugins\
+            Copy-Item -Recurse .\NightRise.NotepadWrapped\plugins.x64\ .\NightRise.NotepadWrapped\PackageFiles\plugins
+            Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
+            Copy-Item "PowerEditor\bin64\Notepad++.exe" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<?xml version=`"1.0`" encoding=`"utf-8`"?>"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Package xmlns=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10`" xmlns:uap=`"http://schemas.microsoft.com/appx/manifest/uap/windows10`" xmlns:uap2=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/2`" xmlns:uap3=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/3`" xmlns:uap4=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/4`" xmlns:rescap=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities`" xmlns:rescap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities/3`" xmlns:desktop=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10`" xmlns:desktop2=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10/2`" xmlns:com=`"http://schemas.microsoft.com/appx/manifest/com/windows10`" xmlns:wincap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/3`" IgnorableNamespaces=`"uap4 wincap3 rescap3 desktop2 com`">"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Identity Name=`"NightRise.NotepadWrapped`" ProcessorArchitecture=`"x64`" Publisher=`"CN=NightRise LLC, O=NightRise LLC, L=Las Vegas, S=NV, C=US`" Version=`"$env:APPVEYOR_BUILD_VERSION`" />"
@@ -73,8 +76,11 @@ after_build:
             makeappx.exe pack -d "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.x64.appx" /l
             signtool.exe sign /a /v /fd SHA256 /f .\req1 /p $env:p1 /t "http://timestamp.digicert.com" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.x64.appx"
 
+            remove-item -Recurse .\NightRise.NotepadWrapped\PackageFiles\plugins\
+            Copy-Item -Recurse .\NightRise.NotepadWrapped\plugins.x64\ .\NightRise.NotepadWrapped\PackageFiles\plugins
             Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml"
-
+            Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
+            Copy-Item "PowerEditor\bin64\Notepad++.exe" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<?xml version=`"1.0`" encoding=`"utf-8`"?>"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Package xmlns=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10`" xmlns:uap=`"http://schemas.microsoft.com/appx/manifest/uap/windows10`" xmlns:uap2=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/2`" xmlns:uap3=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/3`" xmlns:uap4=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/4`" xmlns:rescap=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities`" xmlns:rescap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities/3`" xmlns:desktop=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10`" xmlns:desktop2=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10/2`" xmlns:com=`"http://schemas.microsoft.com/appx/manifest/com/windows10`" xmlns:wincap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/3`" IgnorableNamespaces=`"uap4 wincap3 rescap3 desktop2 com`">"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Identity Name=`"NightRise.NotepadWrapped`" ProcessorArchitecture=`"x64`" Publisher=`"CN=3600D6FE-CEE8-459A-BFB7-3E2538BB25F5`" Version=`"$env:APPVEYOR_BUILD_VERSION`" />"
@@ -82,8 +88,11 @@ after_build:
             makeappx.exe pack -d "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.x64.appx" /l
             signtool.exe sign /a /v /fd SHA256 /f .\req2 /p $env:p2 /t "http://timestamp.digicert.com" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.x64.appx"
 
+            remove-item -Recurse .\NightRise.NotepadWrapped\PackageFiles\plugins\
+            Copy-Item -Recurse .\NightRise.NotepadWrapped\plugins.win32\ .\NightRise.NotepadWrapped\PackageFiles\plugins
             Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml"
-
+            Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
+            Copy-Item "PowerEditor\bin\Notepad++.exe" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<?xml version=`"1.0`" encoding=`"utf-8`"?>"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Package xmlns=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10`" xmlns:uap=`"http://schemas.microsoft.com/appx/manifest/uap/windows10`" xmlns:uap2=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/2`" xmlns:uap3=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/3`" xmlns:uap4=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/4`" xmlns:rescap=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities`" xmlns:rescap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities/3`" xmlns:desktop=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10`" xmlns:desktop2=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10/2`" xmlns:com=`"http://schemas.microsoft.com/appx/manifest/com/windows10`" xmlns:wincap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/3`" IgnorableNamespaces=`"uap4 wincap3 rescap3 desktop2 com`">"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Identity Name=`"NightRise.NotepadWrapped`" ProcessorArchitecture=`"x86`" Publisher=`"CN=NightRise LLC, O=NightRise LLC, L=Las Vegas, S=NV, C=US`" Version=`"$env:APPVEYOR_BUILD_VERSION`" />"
@@ -91,8 +100,11 @@ after_build:
             makeappx.exe pack -d "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.Win32.appx" /l
             signtool.exe sign /a /v /fd SHA256 /f .\req1 /p $env:p1 /t "http://timestamp.digicert.com" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.Win32.appx"
 
+            remove-item -Recurse .\NightRise.NotepadWrapped\PackageFiles\plugins\
+            Copy-Item -Recurse .\NightRise.NotepadWrapped\plugins.win32\ .\NightRise.NotepadWrapped\PackageFiles\plugins
             Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml"
-
+            Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
+            Copy-Item "PowerEditor\bin\Notepad++.exe" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\Notepad++.exe"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<?xml version=`"1.0`" encoding=`"utf-8`"?>"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Package xmlns=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10`" xmlns:uap=`"http://schemas.microsoft.com/appx/manifest/uap/windows10`" xmlns:uap2=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/2`" xmlns:uap3=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/3`" xmlns:uap4=`"http://schemas.microsoft.com/appx/manifest/uap/windows10/4`" xmlns:rescap=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities`" xmlns:rescap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities/3`" xmlns:desktop=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10`" xmlns:desktop2=`"http://schemas.microsoft.com/appx/manifest/desktop/windows10/2`" xmlns:com=`"http://schemas.microsoft.com/appx/manifest/com/windows10`" xmlns:wincap3=`"http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/3`" IgnorableNamespaces=`"uap4 wincap3 rescap3 desktop2 com`">"
             Add-Content -Path "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml" -Value "<Identity Name=`"NightRise.NotepadWrapped`" ProcessorArchitecture=`"x86`" Publisher=`"CN=3600D6FE-CEE8-459A-BFB7-3E2538BB25F5`" Version=`"$env:APPVEYOR_BUILD_VERSION`" />"
