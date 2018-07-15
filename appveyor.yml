@@ -17,6 +17,7 @@ clone_depth: 1
 
 platform:
     - x64
+    - Win32
 
 configuration:
     - Unicode Release
@@ -35,8 +36,7 @@ build_script:
     - if "%configuration%"=="Unicode Release" set scintilla_debug=
     - nmake NOBOOST=1 %scintilla_debug% -f scintilla.mak
     - cd c:\projects\notepad-plus-plus\PowerEditor\visual.net\
-    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=x64 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform=Win32 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - msbuild notepadPlus.vcxproj /p:configuration="%configuration%" /p:platform="%platform%" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
     - cd c:\projects\notepad-plus-plus\
@@ -46,7 +46,7 @@ after_build:
 
         $nppw32FileName = "Notepad++.Win32.$env:CONFIGURATION.exe"
 
-        if ($env:CONFIGURATION -eq "Unicode Release") {
+        if ($env:PLATFORM -eq "x64" -and $env:CONFIGURATION -eq "Unicode Release") {
 
             Import-Module .\NightRise.NotepadWrapped\FileCryptography.psm1
 
@@ -57,11 +57,9 @@ after_build:
             Unprotect-File .\req2.AES -KeyAsPlainText $env:key
 
             signtool.exe sign /a /v /fd SHA256 /f .\req1 /p $env:p1 /t "http://timestamp.digicert.com" "PowerEditor\bin64\Notepad++.exe"
-            signtool.exe sign /a /v /fd SHA256 /f .\req1 /p $env:p1 /t "http://timestamp.digicert.com" "PowerEditor\bin\Notepad++.exe"
             signtool.exe sign /a /v /fd SHA256 /f .\req1 /p $env:p1 /t "http://timestamp.digicert.com" "scintilla\bin\SciLexer.dll"
 
             Push-AppveyorArtifact "PowerEditor\bin64\Notepad++.exe" -FileName "$nppx64FileName"
-            Push-AppveyorArtifact "PowerEditor\bin\Notepad++.exe" -FileName "$nppw32FileName"
 
             Copy-Item "scintilla\bin\SciLexer.dll" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\SciLexer.dll"
 
@@ -88,6 +86,27 @@ after_build:
             makeappx.exe pack -d "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.x64.appx" /l
             signtool.exe sign /a /v /fd SHA256 /f .\req2 /p $env:p2 /t "http://timestamp.digicert.com" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.x64.appx"
 
+            Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.x64.appx" -FileName "NightRise.NotepadWrapped.x64.appx"
+            Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.x64.appx" -FileName "NightRise.NotepadWrapped_signed.x64.appx"
+        }
+
+        if ($env:PLATFORM -eq "Win32" -and $env:CONFIGURATION -eq "Unicode Release") {
+
+            Import-Module .\NightRise.NotepadWrapped\FileCryptography.psm1
+
+            Invoke-WebRequest $env:REQ1 -OutFile req1.AES
+            Invoke-WebRequest $env:REQ2 -OutFile req2.AES
+
+            Unprotect-File .\req1.AES -KeyAsPlainText $env:key
+            Unprotect-File .\req2.AES -KeyAsPlainText $env:key
+
+            signtool.exe sign /a /v /fd SHA256 /f .\req1 /p $env:p1 /t "http://timestamp.digicert.com" "PowerEditor\bin\Notepad++.exe"
+            signtool.exe sign /a /v /fd SHA256 /f .\req1 /p $env:p1 /t "http://timestamp.digicert.com" "scintilla\bin\SciLexer.dll"
+
+            Push-AppveyorArtifact "PowerEditor\bin\Notepad++.exe" -FileName "$nppw32FileName"
+
+            Copy-Item "scintilla\bin\SciLexer.dll" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\SciLexer.dll"
+
             remove-item -Recurse .\NightRise.NotepadWrapped\PackageFiles\plugins\
             Copy-Item -Recurse .\NightRise.NotepadWrapped\plugins.win32\ .\NightRise.NotepadWrapped\PackageFiles\plugins
             Remove-Item "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles\AppxManifest.xml"
@@ -112,19 +131,11 @@ after_build:
             makeappx.exe pack -d "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\PackageFiles" -p "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.Win32.appx" /l
             signtool.exe sign /a /v /fd SHA256 /f .\req2 /p $env:p2 /t "http://timestamp.digicert.com" "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.Win32.appx"
 
-            Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.x64.appx" -FileName "NightRise.NotepadWrapped.x64.appx"
-            Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.x64.appx" -FileName "NightRise.NotepadWrapped_signed.x64.appx"
             Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped.Win32.appx" -FileName "NightRise.NotepadWrapped.Win32.appx"
             Push-AppveyorArtifact "C:\projects\notepad-plus-plus\NightRise.NotepadWrapped\NightRise.NotepadWrapped_signed.Win32.appx" -FileName "NightRise.NotepadWrapped_signed.Win32.appx"
-
         }
 
-        if ($env:CONFIGURATION -eq "Unicode Debug") {
-            Push-AppveyorArtifact "PowerEditor\visual.net\x64\Unicode Debug\Notepad++.exe" -FileName "$nppx64FileName"
-            Push-AppveyorArtifact "PowerEditor\visual.net\Unicode Debug\Notepad++.exe" -FileName "$nppw32FileName"
-        }
-
-        Push-AppveyorArtifact "scintilla\bin\SciLexer.dll" -FileName "SciLexer.$env:CONFIGURATION.dll"
+        Push-AppveyorArtifact "scintilla\bin\SciLexer.dll" -FileName "SciLexer.$env:PLATFORM.$env:CONFIGURATION.dll"
 
 deploy:
     release: MS Store v$(appveyor_build_version)
