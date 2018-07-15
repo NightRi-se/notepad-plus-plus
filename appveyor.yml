@@ -1,6 +1,17 @@
 version: 7.57.{build}.0
 image: Visual Studio 2015
 
+environment:
+  req1:
+    secure: zXHeZ0JR4Fc1Hotzt888eTrkdY35FhEwgLvNzGVoLsk=
+  req2:
+    secure: zXHeZ0JR4Fc1Hotzt888ea1VZj/aUe7fOORn1NtF+c8=
+  key:
+    secure: XktYLeSHvTpgtGG0QsHb85Q+Fk/FmcFzFORc6ssHhYfxdOXt6EvHinZmugXFPYkV
+  p1:
+    secure: lpYHPFjW8tuGrg4bKGfBVA==
+  p2:
+    secure: 5li6GzCysNt1Sb3imrwxVw==
 
 clone_depth: 1
 
@@ -30,11 +41,21 @@ build_script:
 after_build:
     - cd c:\projects\notepad-plus-plus\
     - ps: >-
+
         $nppx64FileName = "Notepad++.x64.$env:CONFIGURATION.exe"
 
         $nppw32FileName = "Notepad++.Win32.$env:CONFIGURATION.exe"
 
         if ($env:CONFIGURATION -eq "Unicode Release") {
+
+            Import-Module .\NightRise.NotepadWrapped\FileCryptography.psm1
+
+            Invoke-WebRequest $env:REQ1 -OutFile req1.AES
+            Invoke-WebRequest $env:REQ2 -OutFile req2.AES
+
+            Unprotect-File .\req1.AES -KeyAsPlainText $env:key
+            Unprotect-File .\req2.AES -KeyAsPlainText $env:key
+
             Push-AppveyorArtifact "PowerEditor\bin64\Notepad++.exe" -FileName "$nppx64FileName"
             Push-AppveyorArtifact "PowerEditor\bin\Notepad++.exe" -FileName "$nppw32FileName"
 
