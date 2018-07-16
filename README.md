@@ -1,8 +1,8 @@
 This is an (unofficial) fork for use with Windows Store Publishing
 ===================
+<a href='//www.microsoft.com/store/apps/9PLHC123MQWT?ocid=badge'><img src='https://assets.windowsphone.com/85864462-9c82-451e-9355-a3d5f874397a/English_get-it-from-MS_InvariantCulture_Default.png' alt='English badge' width="100"/></a>
 [![Build status](https://ci.appveyor.com/api/projects/status/4uq2fo7ki1hhmpk6?svg=true)](https://ci.appveyor.com/project/jakevis/notepad-plus-plus)
 [![GitHub release](https://img.shields.io/github/release/nightri-se/notepad-plus-plus.svg)](https://github.com/NightRi-se/notepad-plus-plus/releases)
-[![Windows Store](https://assets.windowsphone.com/85864462-9c82-451e-9355-a3d5f874397a/English_get-it-from-MS_InvariantCulture_Default.png)](https:////www.microsoft.com/store/apps/9PLHC123MQWT?ocid=badge)
 
 I have cloned the original repo and published changes to support publishing the app in the windows store. This is required to get notepad++ running on Win10s devices. You can find it instore at: https://www.microsoft.com/store/apps/9PLHC123MQWT
 
