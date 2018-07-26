@@ -48,7 +48,7 @@ UpgradeLog*.htm
 *.tlh
 *.tmp
 *.tmp_proj
-*.log
+#*.log
 .builds
 *.pidb
 
