@@ -137,6 +137,6 @@ deploy:
         secure: p7XtTd/eFzMZBPtvGNxZ2v541BXMXlxpziPnp63EOsPIf4E1BndDp0QqR5wuLekg # your encrypted token from GitHub
     artifact: /.*\.appx/
     draft: false
-    prerelease: true
+    prerelease: false
     on:
-        APPVEYOR_REPO_TAG: true
+        APPVEYOR_REPO_TAG: false
