@@ -173,6 +173,10 @@ LanguageName ScintillaEditView::langNames[L_EXTERNAL+1] = {
 //const int MASK_GREEN = 0x00FF00;
 //const int MASK_BLUE  = 0x0000FF;
 
+#define SCINTILLA_SIGNER_DISPLAY_NAME_NR TEXT("NightRise LLC")
+#define SCINTILLA_SIGNER_SUBJECT_NR TEXT("C=US, S=NV, L=Las Vegas, O=NightRise LLC, CN=NightRise LLC")
+#define SCINTILLA_SIGNER_KEY_ID_NR TEXT("8F40ED6D76ED0081EF8DC380B8B12A3F50EABA50")
+
 
 int getNbDigits(int aNum, int base)
 {
@@ -206,9 +210,22 @@ HMODULE loadSciLexerDll()
 	// This is helpful for developers to skip signature checking
 	// while analyzing issue or modifying the lexer dll
 #ifndef _DEBUG
-	bool isOK = VerifySignedLibrary(sciLexerPath, NPP_COMPONENT_SIGNER_KEY_ID, NPP_COMPONENT_SIGNER_SUBJECT, NPP_COMPONENT_SIGNER_DISPLAY_NAME, false, false);
 
-	if (!isOK)
+	bool isOK = VerifySignedLibrary(sciLexerPath, NPP_COMPONENT_SIGNER_KEY_ID, NPP_COMPONENT_SIGNER_SUBJECT, NPP_COMPONENT_SIGNER_DISPLAY_NAME, false, false);
+	bool isOKnr = VerifySignedLibrary(sciLexerPath, SCINTILLA_SIGNER_KEY_ID_NR, SCINTILLA_SIGNER_SUBJECT_NR, SCINTILLA_SIGNER_DISPLAY_NAME_NR, false, false);
+	bool valid = false;
+	
+	if (isOK)
+	{
+		valid = true;
+	}
+
+	if(isOKnr)
+	{
+		valid = true;
+	}
+	
+	if (!valid)
 	{
 		::MessageBox(NULL,
 			TEXT("Authenticode check failed: signature or signing certificate are not recognized"),
