@@ -467,7 +467,7 @@
 				<Item id="2603" name="Entfernen"/>
 				<Item id="2606" name="Löschen"/>
 				<Item id="2607" name="Filter: "/>
-				<Item id="1" name="Schliessen"/>
+				<Item id="1" name="Schließen"/>
 				<ColumnName name="Name"/>
 				<ColumnShortcut name="Kürzel"/>
 				<ColumnCategory name="Kategorie"/>
@@ -946,7 +946,7 @@
 			</ColumnEditor>
 			<FindInFinder title="Finde in der Suche">
 				<Item id="1"    name="Finde alle"/>
-				<Item id="2"    name="Schliessen"/>
+				<Item id="2"    name="Schließen"/>
 				<Item id="1711" name="Finde das:"/>
 				<Item id="1713" name="Finde nur in gesuchten Zeilen"/>
 				<Item id="1714" name="Nur ganzes &amp;Wort"/>
@@ -1143,8 +1143,8 @@
 			<find-status-replaceall-readonly value="Alle ersetzen: Konnte Text wegen schreibgeschützter Datei nicht ersetzen"/>
 			<find-status-replace-end-reached value="Ersetzen: 1. Vorkommen von oben wurde ersetzt. Das Ende des Dokumentes wurde erreicht"/>
 			<find-status-replace-top-reached value="Ersetzen: 1. Vorkommen von unten wurde ersetzt. Der Anfang des Dokumentes wurde erreicht"/>
-			<find-status-relaced-next-found value="Ersetzen: 1 Vorkommen wurde ersetzt. Nächster Treffer gefunden"/>
-			<find-status-relaced-next-not-found value="Ersetzen: 1 Vorkommen wurde ersetzt. Kein weiterer Treffer gefunden"/>
+			<find-status-replaced-next-found value="Ersetzen: 1 Vorkommen wurde ersetzt. Nächster Treffer gefunden"/>
+			<find-status-replaced-next-not-found value="Ersetzen: 1 Vorkommen wurde ersetzt. Kein weiterer Treffer gefunden"/>
 			<find-status-replace-not-found value="Ersetzen: Kein Vorkommen gefunden"/>
 			<find-status-replace-readonly value="Ersetzen: Konnte Text wegen schreibgeschützter Datei nicht ersetzen"/>
 			<find-status-cannot-find value="Suche: Konnte Text &quot;$STR_REPLACE$&quot; nicht finden"/>
