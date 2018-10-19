@@ -176,9 +176,6 @@ LanguageName ScintillaEditView::langNames[L_EXTERNAL+1] = {
 #define SCINTILLA_SIGNER_DISPLAY_NAME TEXT("Notepad++")
 #define SCINTILLA_SIGNER_SUBJECT TEXT("C=FR, S=Ile-de-France, L=Saint Cloud, O=\"Notepad++\", CN=\"Notepad++\"")
 #define SCINTILLA_SIGNER_KEY_ID TEXT("42C4C5846BB675C74E2B2C90C69AB44366401093")
-#define SCINTILLA_SIGNER_DISPLAY_NAME_NR TEXT("NightRise LLC")
-#define SCINTILLA_SIGNER_SUBJECT_NR TEXT("C=US, S=NV, L=Las Vegas, O=NightRise LLC, CN=NightRise LLC")
-#define SCINTILLA_SIGNER_KEY_ID_NR TEXT("8F40ED6D76ED0081EF8DC380B8B12A3F50EABA50")
 
 
 int getNbDigits(int aNum, int base)
@@ -214,27 +211,15 @@ HMODULE loadSciLexerDll()
 	// while analyzing issue or modifying the lexer dll
 #ifndef _DEBUG
 	bool isOK = VerifySignedLibrary(sciLexerPath, SCINTILLA_SIGNER_KEY_ID, SCINTILLA_SIGNER_SUBJECT, SCINTILLA_SIGNER_DISPLAY_NAME, false, false);
-	bool isOKnr = VerifySignedLibrary(sciLexerPath, SCINTILLA_SIGNER_KEY_ID_NR, SCINTILLA_SIGNER_SUBJECT_NR, SCINTILLA_SIGNER_DISPLAY_NAME_NR, false, false);
-	bool valid = false;
 
-	if (isOK)
+	if (!isOK)
 	{
-		valid = true;
-	}
-	if(isOKnr)
-	{
-		valid = true;
-	}
-
-	if (!valid)
-	{
-			::MessageBox(NULL,
+		::MessageBox(NULL,
 			TEXT("Authenticode check failed: signature or signing certificate are not recognized"),
 			TEXT("Library verification failed"),
 			MB_OK | MB_ICONERROR);
 		return nullptr;
 	}
-
 #endif // !_DEBUG
 
 	return ::LoadLibrary(sciLexerPath.c_str());
@@ -1428,7 +1413,7 @@ void ScintillaEditView::defineDocType(LangType typeDoc)
     }
 	setSpecialIndicator(*pStyle);
 
-    // Il faut surtout faire un test ici avant d'ex�cuter SCI_SETCODEPAGE
+    // Il faut surtout faire un test ici avant d'ex?cuter SCI_SETCODEPAGE
     // Sinon y'aura un soucis de performance!
 	if (isCJK())
 	{
