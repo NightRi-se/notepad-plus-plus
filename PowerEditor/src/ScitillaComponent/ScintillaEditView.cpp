@@ -208,7 +208,7 @@ HMODULE loadSciLexerDll()
 
 	bool isOK = VerifySignedLibrary(sciLexerPath, NPP_COMPONENT_SIGNER_KEY_ID, NPP_COMPONENT_SIGNER_SUBJECT, NPP_COMPONENT_SIGNER_DISPLAY_NAME, false, false);	
 	
-	if (!ok)
+	if (!isOK)
 	{
 		::MessageBox(NULL,
 			TEXT("Authenticode check failed: signature or signing certificate are not recognized"),
@@ -216,7 +216,7 @@ HMODULE loadSciLexerDll()
 			MB_OK | MB_ICONERROR);
 		return nullptr;
 	}
-	
+
 #endif // !_DEBUG
 
 	return ::LoadLibrary(sciLexerPath.c_str());
