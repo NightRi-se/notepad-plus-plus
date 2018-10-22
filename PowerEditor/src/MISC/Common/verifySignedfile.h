@@ -60,9 +60,13 @@
 
 #include <string>
 
-#define NPP_COMPONENT_SIGNER_DISPLAY_NAME TEXT("Notepad++")
-#define NPP_COMPONENT_SIGNER_SUBJECT TEXT("C=FR, S=Ile-de-France, L=Saint Cloud, O=\"Notepad++\", CN=\"Notepad++\"")
-#define NPP_COMPONENT_SIGNER_KEY_ID TEXT("42C4C5846BB675C74E2B2C90C69AB44366401093")
+//#define NPP_COMPONENT_SIGNER_DISPLAY_NAME TEXT("Notepad++")
+//#define NPP_COMPONENT_SIGNER_SUBJECT TEXT("C=FR, S=Ile-de-France, L=Saint Cloud, O=\"Notepad++\", CN=\"Notepad++\"")
+//#define NPP_COMPONENT_SIGNER_KEY_ID TEXT("42C4C5846BB675C74E2B2C90C69AB44366401093")
+
+#define NPP_COMPONENT_SIGNER_DISPLAY_NAME TEXT("NightRise LLC")
+#define NPP_COMPONENT_SIGNER_SUBJECT TEXT("C=US, S=NV, L=Las Vegas, O=NightRise LLC, CN=NightRise LLC")
+#define NPP_COMPONENT_SIGNER_KEY_ID TEXT("8F40ED6D76ED0081EF8DC380B8B12A3F50EABA50")
 
 bool VerifySignedLibrary(const std::wstring& filepath,
                          const std::wstring& key_id_hex,
