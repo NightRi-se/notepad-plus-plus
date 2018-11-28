@@ -12,7 +12,7 @@
     <Resource uap:Scale="400" />
   </Resources>
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.16299.15" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.18290.0" />
   </Dependencies>
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
@@ -22,7 +22,7 @@
     <Application Id="NotepadWrapped" Executable="notepad++.exe" EntryPoint="Windows.FullTrustApplication">
 	<Extensions>
       <uap:Extension Category="windows.fileTypeAssociation">
-        <uap:FileTypeAssociation Name="notepad">
+        <uap3:FileTypeAssociation Name="notepad">
           <uap:SupportedFileTypes>
 						<uap:FileType>.txt</uap:FileType>
 						<uap:FileType>.log</uap:FileType>
@@ -115,10 +115,10 @@
 						<uap:FileType>.ps1</uap:FileType>
 						<uap:FileType>.cfg</uap:FileType>
           </uap:SupportedFileTypes>
-						<uap2:SupportedVerbs>
-							<uap3:Verb Id="Edit">Edit with Notepad++</uap3:Verb>
-						</uap2:SupportedVerbs>
-        </uap:FileTypeAssociation>
+					<uap2:SupportedVerbs>
+						<uap3:Verb Id="Edit" Parameters="" >Edit</uap3:Verb>
+					</uap2:SupportedVerbs>
+        </uap3:FileTypeAssociation>
       </uap:Extension>
 		<uap3:Extension
 					Category="windows.appExecutionAlias"
