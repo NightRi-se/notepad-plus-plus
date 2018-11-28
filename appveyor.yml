@@ -1,4 +1,4 @@
-version: 7.59.{build}.0
+version: 7.60.{build}.0
 image: Visual Studio 2015
 
 environment:
