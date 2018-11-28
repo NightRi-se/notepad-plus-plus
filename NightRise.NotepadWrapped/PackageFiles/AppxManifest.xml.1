@@ -22,8 +22,11 @@
     <Application Id="NotepadWrapped" Executable="notepad++.exe" EntryPoint="Windows.FullTrustApplication">
 	<Extensions>
       <uap:Extension Category="windows.fileTypeAssociation">
-        <uap3:FileTypeAssociation Name="notepad">
-          <uap:SupportedFileTypes>
+        <uap3:FileTypeAssociation Name="notepad++" MultiSelectModel="Player">
+				  <uap2:SupportedVerbs>
+						<uap3:Verb Id="Notepad++" MultiSelectModel="Player">Notepad++</uap3:Verb>
+					</uap2:SupportedVerbs>
+					<uap:SupportedFileTypes>
 						<uap:FileType>.txt</uap:FileType>
 						<uap:FileType>.log</uap:FileType>
 						<uap:FileType>.ini</uap:FileType>
@@ -115,9 +118,6 @@
 						<uap:FileType>.ps1</uap:FileType>
 						<uap:FileType>.cfg</uap:FileType>
           </uap:SupportedFileTypes>
-					<uap2:SupportedVerbs>
-						<uap3:Verb Id="Edit" Parameters="-l" >Edit</uap3:Verb>
-					</uap2:SupportedVerbs>
         </uap3:FileTypeAssociation>
       </uap:Extension>
 		<uap3:Extension
