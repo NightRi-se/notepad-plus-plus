@@ -81,8 +81,8 @@ FunctionEnd
 ;Installer Functions
 Var Dialog
 Var NoUserDataCheckboxHandle
+Var Plugin4AllUsersCheckboxHandle
 Var ShortcutCheckboxHandle
-Var PluginLoadFromUserDataCheckboxHandle
 Var WinVer
 
 Function ExtraOptions
@@ -93,23 +93,23 @@ Function ExtraOptions
 		Abort
 	${EndIf}
 
-	${NSD_CreateCheckbox} 0 0 100% 30u "Don't use %APPDATA%$\nEnable this option to make Notepad++ load/write the configuration files from/to its install directory. Check it if you use Notepad++ in a USB device."
-	Pop $NoUserDataCheckboxHandle
-	${NSD_OnClick} $NoUserDataCheckboxHandle OnChange_NoUserDataCheckBox
-	
-	${NSD_CreateCheckbox} 0 50 100% 30u "Allow plugins to be loaded from %APPDATA%\notepad++\plugins$\nIt could cause a security issue. Turn it on if you know what you are doing."
-	Pop $PluginLoadFromUserDataCheckboxHandle
-	${NSD_OnClick} $PluginLoadFromUserDataCheckboxHandle OnChange_PluginLoadFromUserDataCheckBox
-	${If} $allowAppDataPluginsLoading == "true"
-		${NSD_Check} $PluginLoadFromUserDataCheckboxHandle
-	${EndIf}
-	
-	${NSD_CreateCheckbox} 0 110 100% 30u "Create Shortcut on Desktop"
+	${NSD_CreateCheckbox} 0 0 100% 30u "Create Shortcut on Desktop"
 	Pop $ShortcutCheckboxHandle
 	StrCmp $WinVer "8" 0 +2
 	${NSD_Check} $ShortcutCheckboxHandle
 	${NSD_OnClick} $ShortcutCheckboxHandle OnChange_ShortcutCheckBox
-
+	
+	${NSD_CreateCheckbox} 0 80 100% 30u "Check this will make your plugin installed for all users on this PC."
+	Pop $Plugin4AllUsersCheckboxHandle
+	${If} $arePlugins4AllUsers == "true"
+		${NSD_Check} $Plugin4AllUsersCheckboxHandle
+	${EndIf}
+	${NSD_OnClick} $Plugin4AllUsersCheckboxHandle OnChange_Plugin4AllUsersCheckBox
+	
+	${NSD_CreateCheckbox} 0 160 100% 30u "Don't use %APPDATA%$\nEnable this option to make Notepad++ load/write the configuration files from/to its install directory. Check it if you use Notepad++ in a USB device."
+	Pop $NoUserDataCheckboxHandle
+	${NSD_OnClick} $NoUserDataCheckboxHandle OnChange_NoUserDataCheckBox
+	
 	nsDialogs::Show
 FunctionEnd
 
@@ -131,7 +131,6 @@ Function preventInstallInWin9x
 FunctionEnd
 
 Var noUserDataChecked
-Var allowPluginLoadFromUserDataChecked
 Var createShortcutChecked
 
 ; The definition of "OnChange" event for checkbox
@@ -139,18 +138,17 @@ Function OnChange_NoUserDataCheckBox
 	${NSD_GetState} $NoUserDataCheckboxHandle $noUserDataChecked
 FunctionEnd
 
-Function OnChange_PluginLoadFromUserDataCheckBox
-	${NSD_GetState} $PluginLoadFromUserDataCheckboxHandle $allowPluginLoadFromUserDataChecked
-	
-	${If} $allowPluginLoadFromUserDataChecked == ${BST_CHECKED}
-		StrCpy $allowAppDataPluginsLoading "true"
-	${ELSE}
-		StrCpy $allowAppDataPluginsLoading "false"
-	${EndIf}
-FunctionEnd
-
 Function OnChange_ShortcutCheckBox
 	${NSD_GetState} $ShortcutCheckboxHandle $createShortcutChecked
+FunctionEnd
+
+Function OnChange_Plugin4AllUsersCheckBox
+	${NSD_GetState} $ShortcutCheckboxHandle $0
+	${If} $0 == ${BST_CHECKED}
+		StrCpy $arePlugins4AllUsers "true"
+	${ELSE}
+		StrCpy $arePlugins4AllUsers "false"
+	${EndIf}
 FunctionEnd
 
 

@@ -995,6 +995,11 @@ bool NppParameters::load()
 	// Test if localConf.xml exist
 	_isLocal = (PathFileExists(localConfPath.c_str()) == TRUE);
 
+	generic_string pluginsForAllUserPath(_nppPath);
+	PathAppend(pluginsForAllUserPath, pluginsForAllUsersFile);
+	if (!PathFileExists(pluginsForAllUserPath.c_str()))
+		pluginsForAllUserPath = TEXT("");
+
 	// Under vista and windows 7, the usage of doLocalConf.xml is not allowed
 	// if Notepad++ is installed in "program files" directory, because of UAC
 	if (_isLocal)
@@ -1012,9 +1017,13 @@ bool NppParameters::load()
 		}
 	}
 
+	generic_string nppPluginRootParent;
 	if (_isLocal)
 	{
-		_userPath = _nppPath;
+		_userPath = nppPluginRootParent = _nppPath;
+
+		_pluginRootDir = _nppPath;
+		PathAppend(_pluginRootDir, TEXT("plugins"));
 	}
 	else
 	{
@@ -1023,18 +1032,35 @@ bool NppParameters::load()
 		PathAppend(_userPath, TEXT("Notepad++"));
 		_appdataNppDir = _userPath;
 
-		// Plugin System V1
 		if (!PathFileExists(_userPath.c_str()))
 			::CreateDirectory(_userPath.c_str(), NULL);
 
-		// Plugin System V2
 		_localAppdataNppDir = getSpecialFolderLocation(CSIDL_LOCAL_APPDATA);
 		PathAppend(_localAppdataNppDir, TEXT("Notepad++"));
-		if (!PathFileExists(_localAppdataNppDir.c_str()))
-			::CreateDirectory(_localAppdataNppDir.c_str(), NULL);
-	}
-	
+		nppPluginRootParent = _localAppdataNppDir;
 
+		_pluginRootDir = _localAppdataNppDir;
+		PathAppend(_pluginRootDir, TEXT("plugins"));
+	}
+
+	// pluginsForAllUser.xml > doLocalConf.xml
+	// overriding _pluginRootDir
+	if (!pluginsForAllUserPath.empty())
+	{
+		_pluginRootDir = getSpecialFolderLocation(CSIDL_COMMON_APPDATA);
+		PathAppend(_pluginRootDir, TEXT("Notepad++"));
+		nppPluginRootParent = _pluginRootDir;
+
+		PathAppend(_pluginRootDir, TEXT("plugins"));
+
+		// For PluginAdmin to launch the wingup with UAC
+		setElevationRequired(true);
+	}
+
+	if (!PathFileExists(nppPluginRootParent.c_str()))
+		::CreateDirectory(nppPluginRootParent.c_str(), NULL);
+	if (!PathFileExists(_pluginRootDir.c_str()))
+		::CreateDirectory(_pluginRootDir.c_str(), NULL);
 
 	_sessionPath = _userPath; // Session stock the absolute file path, it should never be on cloud
 
@@ -2040,7 +2066,7 @@ bool NppParameters::getSessionFromXmlTree(TiXmlDocument *pSessionDoc, Session *p
 					(childNode->ToElement())->Attribute(TEXT("endPos"), &position._endPos);
 					(childNode->ToElement())->Attribute(TEXT("selMode"), &position._selMode);
 					(childNode->ToElement())->Attribute(TEXT("scrollWidth"), &position._scrollWidth);
-					(childNode->ToElement())->Attribute(TEXT("offset"), &position._offset);
+
 					MapPosition mapPosition;
 					int32_t mapPosVal;
 					const TCHAR *mapPosStr = (childNode->ToElement())->Attribute(TEXT("mapFirstVisibleDisplayLine"), &mapPosVal);

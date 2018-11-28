@@ -26,6 +26,8 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 Var UPDATE_PATH
+Var PLUGIN_INST_PATH
+Var PLUGIN_CONF_PATH
 Function setPathAndOptions
     ${If} $UPDATE_PATH == ""
         Goto initUpdatePath
@@ -43,20 +45,27 @@ initUpdatePath:
 
 	${If} $noUserDataChecked == ${BST_CHECKED}
 		File "..\bin\doLocalConf.xml"
+		StrCpy $PLUGIN_INST_PATH "$INSTDIR\plugins"
+		StrCpy $PLUGIN_CONF_PATH "$INSTDIR\plugins\Config"
+		CreateDirectory $PLUGIN_INST_PATH\config
 	${ELSE}
 		IfFileExists $INSTDIR\doLocalConf.xml 0 +2
 		Delete $INSTDIR\doLocalConf.xml
+		StrCpy $PLUGIN_INST_PATH "$PROFILE\AppData\Local\${APPNAME}\plugins"
+		StrCpy $PLUGIN_CONF_PATH "$APPDATA\${APPNAME}\plugins\Config"
 		StrCpy $UPDATE_PATH "$APPDATA\${APPNAME}"
 		CreateDirectory $UPDATE_PATH\plugins\config
 	${EndIf}
 	
-	${If} $allowAppDataPluginsLoading == "true"
-		File "..\bin\allowAppDataPlugins.xml"
+	; override PLUGIN_INST_PATH
+	${If} $arePlugins4AllUsers == "true"
+		ReadEnvStr $0 "ALLUSERSPROFILE"
+		StrCpy $PLUGIN_INST_PATH "$0\Notepad++\plugins"
+		File /oname=$INSTDIR\pluginsForAllUsers.xml "..\bin\pluginsForAllUsers_dummy.xml"
 	${ELSE}
-		IfFileExists $INSTDIR\allowAppDataPlugins.xml 0 +2
-		Delete $INSTDIR\allowAppDataPlugins.xml
+		Delete $INSTDIR\pluginsForAllUsers.xml
 	${EndIf}
-    
+
 alreadyDone:
 FunctionEnd
 	
@@ -122,7 +131,7 @@ Function removeUnstablePlugins
 		Delete "$INSTDIR\plugins\HexEditorPlugin.dll"
 
 	IfFileExists "$INSTDIR\plugins\HexEditor.dll" 0 +4
-		MessageBox MB_OK "Due to the stability issue,$\nHexEditor.dll will be moved to the directory $\"disabled$\"" /SD IDOK 
+		MessageBox MB_OK "Due to the stability issue,$\nHexEditor.dll will be moved to the directory $\"disabled$\"" /SD IDOK
 		Rename "$INSTDIR\plugins\HexEditor.dll" "$INSTDIR\plugins\disabled\HexEditor.dll" 
 		Delete "$INSTDIR\plugins\HexEditor.dll"
 
