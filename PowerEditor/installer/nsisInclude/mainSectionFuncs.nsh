@@ -27,14 +27,18 @@
 
 Var UPDATE_PATH
 Var PLUGIN_INST_PATH
-Var PLUGIN_CONF_PATH
+Var USER_PLUGIN_CONF_PATH
+Var ALLUSERS_PLUGIN_CONF_PATH
 Function setPathAndOptions
     ${If} $UPDATE_PATH == ""
+	${OrIf} $PLUGIN_INST_PATH == ""
+	${OrIf} $USER_PLUGIN_CONF_PATH == ""
+	${OrIf} $ALLUSERS_PLUGIN_CONF_PATH == ""
         Goto initUpdatePath
 	${ELSE}
         Goto alreadyDone
 	${EndIf}
-    
+	
 initUpdatePath:
     
 	; Set Section properties
@@ -44,31 +48,43 @@ initUpdatePath:
 	SetOutPath "$INSTDIR\"
 
 	${If} $noUserDataChecked == ${BST_CHECKED}
+
 		File "..\bin\doLocalConf.xml"
 		StrCpy $PLUGIN_INST_PATH "$INSTDIR\plugins"
-		StrCpy $PLUGIN_CONF_PATH "$INSTDIR\plugins\Config"
+		StrCpy $ALLUSERS_PLUGIN_CONF_PATH "$INSTDIR\plugins\Config"
+		StrCpy $USER_PLUGIN_CONF_PATH "$INSTDIR\plugins\Config"
 		CreateDirectory $PLUGIN_INST_PATH\config
 	${ELSE}
+	
 		IfFileExists $INSTDIR\doLocalConf.xml 0 +2
 		Delete $INSTDIR\doLocalConf.xml
-		StrCpy $PLUGIN_INST_PATH "$PROFILE\AppData\Local\${APPNAME}\plugins"
-		StrCpy $PLUGIN_CONF_PATH "$APPDATA\${APPNAME}\plugins\Config"
+		
+		; "%PROGRAMDATA%\Notepad++\plugins"
+		SetShellVarContext all
+		StrCpy $PLUGIN_INST_PATH "$APPDATA\${APPNAME}\plugins"
+		StrCpy $ALLUSERS_PLUGIN_CONF_PATH "$APPDATA\${APPNAME}\plugins\Config"
+		
+		SetShellVarContext current
+		StrCpy $USER_PLUGIN_CONF_PATH "$APPDATA\${APPNAME}\plugins\Config"
 		StrCpy $UPDATE_PATH "$APPDATA\${APPNAME}"
 		CreateDirectory $UPDATE_PATH\plugins\config
 	${EndIf}
 	
-	; override PLUGIN_INST_PATH
-	${If} $arePlugins4AllUsers == "true"
-		ReadEnvStr $0 "ALLUSERSPROFILE"
-		StrCpy $PLUGIN_INST_PATH "$0\Notepad++\plugins"
-		File /oname=$INSTDIR\pluginsForAllUsers.xml "..\bin\pluginsForAllUsers_dummy.xml"
-	${ELSE}
-		Delete $INSTDIR\pluginsForAllUsers.xml
-	${EndIf}
+	WriteIniStr "$INSTDIR\uninstall.ini" "Uninstall" "UPDATE_PATH" $UPDATE_PATH 
+	WriteIniStr "$INSTDIR\uninstall.ini" "Uninstall" "PLUGIN_INST_PATH" $PLUGIN_INST_PATH 
+	WriteIniStr "$INSTDIR\uninstall.ini" "Uninstall" "USER_PLUGIN_CONF_PATH" $USER_PLUGIN_CONF_PATH 
+	WriteIniStr "$INSTDIR\uninstall.ini" "Uninstall" "ALLUSERS_PLUGIN_CONF_PATH" $ALLUSERS_PLUGIN_CONF_PATH 
 
 alreadyDone:
 FunctionEnd
-	
+
+Function un.setPathAndOptions
+    ReadINIStr $UPDATE_PATH "$INSTDIR\uninstall.ini" "Uninstall" "UPDATE_PATH" 
+    ReadINIStr $PLUGIN_INST_PATH "$INSTDIR\uninstall.ini" "Uninstall" "PLUGIN_INST_PATH" 
+    ReadINIStr $USER_PLUGIN_CONF_PATH "$INSTDIR\uninstall.ini" "Uninstall" "USER_PLUGIN_CONF_PATH" 
+    ReadINIStr $ALLUSERS_PLUGIN_CONF_PATH "$INSTDIR\uninstall.ini" "Uninstall" "ALLUSERS_PLUGIN_CONF_PATH" 
+FunctionEnd
+
 Function copyCommonFiles
 	SetOverwrite off
 	SetOutPath "$UPDATE_PATH\"

@@ -427,7 +427,7 @@ PluginsAdminDlg::PluginsAdminDlg()
 	PathAppend(_updaterFullPath, TEXT("gup.exe"));
 
 	// get plugin-list path
-	_pluginListFullPath = getPluginConfigPath();
+	_pluginListFullPath = pNppParameters->getPluginConfDir();
 
 #ifdef DEBUG // if not debug, then it's release
 	// load from nppPluginList.json instead of nppPluginList.dll
@@ -435,32 +435,6 @@ PluginsAdminDlg::PluginsAdminDlg()
 #else //RELEASE
 	PathAppend(_pluginListFullPath, TEXT("nppPluginList.dll"));
 #endif
-	;
-}
-
-generic_string PluginsAdminDlg::getPluginConfigPath() const
-{
-	NppParameters *pNppParameters = NppParameters::getInstance();
-	generic_string nppPluginsConfDir;
-
-	if (pNppParameters->isLocal())
-	{
-		nppPluginsConfDir = pNppParameters->getNppPath();
-	}
-	else
-	{
-		nppPluginsConfDir = pNppParameters->getAppDataNppDir();
-	}
-
-	PathAppend(nppPluginsConfDir, TEXT("plugins"));
-	PathAppend(nppPluginsConfDir, TEXT("Config"));
-
-	if (!::PathFileExists(nppPluginsConfDir.c_str()))
-	{
-		::CreateDirectory(nppPluginsConfDir.c_str(), NULL);
-	}
-
-	return nppPluginsConfDir;
 }
 
 bool PluginsAdminDlg::exitToInstallRemovePlugins(Operation op, const vector<PluginUpdateInfo*>& puis)
@@ -714,7 +688,6 @@ bool PluginsAdminDlg::isValide()
 		return false;
 	}
 
-	generic_string gupPath;
 	if (!::PathFileExists(_updaterFullPath.c_str()))
 	{
 		return false;
@@ -1097,7 +1070,6 @@ INT_PTR CALLBACK PluginsAdminDlg::run_dlgProc(UINT message, WPARAM wParam, LPARA
 	{
         case WM_INITDIALOG :
 		{
-
 			return TRUE;
 		}
 

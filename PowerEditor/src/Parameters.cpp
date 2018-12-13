@@ -995,11 +995,6 @@ bool NppParameters::load()
 	// Test if localConf.xml exist
 	_isLocal = (PathFileExists(localConfPath.c_str()) == TRUE);
 
-	generic_string pluginsForAllUserPath(_nppPath);
-	PathAppend(pluginsForAllUserPath, pluginsForAllUsersFile);
-	if (!PathFileExists(pluginsForAllUserPath.c_str()))
-		pluginsForAllUserPath = TEXT("");
-
 	// Under vista and windows 7, the usage of doLocalConf.xml is not allowed
 	// if Notepad++ is installed in "program files" directory, because of UAC
 	if (_isLocal)
@@ -1024,29 +1019,22 @@ bool NppParameters::load()
 
 		_pluginRootDir = _nppPath;
 		PathAppend(_pluginRootDir, TEXT("plugins"));
+
+		_userPluginConfDir = _pluginRootDir;
+		PathAppend(_userPluginConfDir, TEXT("Config"));
 	}
 	else
 	{
 		_userPath = getSpecialFolderLocation(CSIDL_APPDATA);
 
 		PathAppend(_userPath, TEXT("Notepad++"));
-		_appdataNppDir = _userPath;
+		_appdataNppDir = _userPluginConfDir = _userPath;
+		PathAppend(_userPluginConfDir, TEXT("plugins"));
+		PathAppend(_userPluginConfDir, TEXT("Config"));
 
 		if (!PathFileExists(_userPath.c_str()))
 			::CreateDirectory(_userPath.c_str(), NULL);
 
-		_localAppdataNppDir = getSpecialFolderLocation(CSIDL_LOCAL_APPDATA);
-		PathAppend(_localAppdataNppDir, TEXT("Notepad++"));
-		nppPluginRootParent = _localAppdataNppDir;
-
-		_pluginRootDir = _localAppdataNppDir;
-		PathAppend(_pluginRootDir, TEXT("plugins"));
-	}
-
-	// pluginsForAllUser.xml > doLocalConf.xml
-	// overriding _pluginRootDir
-	if (!pluginsForAllUserPath.empty())
-	{
 		_pluginRootDir = getSpecialFolderLocation(CSIDL_COMMON_APPDATA);
 		PathAppend(_pluginRootDir, TEXT("Notepad++"));
 		nppPluginRootParent = _pluginRootDir;
@@ -1056,6 +1044,9 @@ bool NppParameters::load()
 		// For PluginAdmin to launch the wingup with UAC
 		setElevationRequired(true);
 	}
+
+	_pluginConfDir = _pluginRootDir;
+	PathAppend(_pluginConfDir, TEXT("Config"));
 
 	if (!PathFileExists(nppPluginRootParent.c_str()))
 		::CreateDirectory(nppPluginRootParent.c_str(), NULL);

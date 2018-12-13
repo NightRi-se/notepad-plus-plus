@@ -1493,8 +1493,9 @@ public:
 	generic_string getNppPath() const {return _nppPath;};
 	generic_string getContextMenuPath() const {return _contextMenuPath;};
 	const TCHAR * getAppDataNppDir() const {return _appdataNppDir.c_str();};
-	const TCHAR * getLocalAppDataNppDir() const { return _localAppdataNppDir.c_str(); };
 	const TCHAR * getPluginRootDir() const { return _pluginRootDir.c_str(); };
+	const TCHAR * getPluginConfDir() const { return _pluginConfDir.c_str(); };
+	const TCHAR * getUserPluginConfDir() const { return _userPluginConfDir.c_str(); };
 	const TCHAR * getWorkingDir() const {return _currentDirectory.c_str();};
 	const TCHAR * getWorkSpaceFilePath(int i) const {
 		if (i < 0 || i > 2) return nullptr;
@@ -1725,8 +1726,9 @@ private:
 	generic_string _userPath;
 	generic_string _stylerPath;
 	generic_string _appdataNppDir; // sentinel of the absence of "doLocalConf.xml" : (_appdataNppDir == TEXT(""))?"doLocalConf.xml present":"doLocalConf.xml absent"
-	generic_string _localAppdataNppDir; // "%LOCALAPPDATA%\Notepad++"
-	generic_string _pluginRootDir;
+	generic_string _pluginRootDir; // plugins root where all the plugins are installed
+	generic_string _pluginConfDir; // plugins config dir where the plugin list is installed
+	generic_string _userPluginConfDir; // plugins config dir for per user where the plugin parameters are saved / loaded
 	generic_string _currentDirectory;
 	generic_string _workSpaceFilePathes[3];
 
