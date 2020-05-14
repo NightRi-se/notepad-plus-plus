@@ -2,22 +2,22 @@ This is an (unofficial) fork for use with Windows Store Publishing
 ===================
 <a href='//www.microsoft.com/store/apps/9PLHC123MQWT?ocid=badge'><img src='https://assets.windowsphone.com/85864462-9c82-451e-9355-a3d5f874397a/English_get-it-from-MS_InvariantCulture_Default.png' alt='English badge' width="100"/></a>
 [![Build status](https://ci.appveyor.com/api/projects/status/4uq2fo7ki1hhmpk6?svg=true)](https://ci.appveyor.com/project/jakevis/notepad-plus-plus)
-[![GitHub release](https://img.shields.io/github/release/nightri-se/notepad-plus-plus.svg)](https://github.com/NightRi-se/notepad-plus-plus/releases)
+[![GitHub release](https://img.shields.io/github/release/WoofyIO/notepad-plus-plus.svg)](https://github.com/NightRi-se/notepad-plus-plus/releases)
 
 I have cloned the original repo and published changes to support publishing the app in the windows store. This is required to get notepad++ running on Win10s devices. You can find it instore at: https://www.microsoft.com/store/apps/9PLHC123MQWT
 
 Current list of changes:
-1. Removal of the run Diag (you cant open a command prompt on 10s) - see https://github.com/NightRi-se/notepad-plus-plus/blob/master/PowerEditor/src/WinControls/StaticDialog/RunDlg/RunDlg.rc for most of the required changes.
-2. Added the NightRise LLC codesign cert for validation - see https://github.com/NightRi-se/notepad-plus-plus/blob/master/PowerEditor/src/ScitillaComponent/ScintillaEditView.cpp
+1. Removal of the run Diag (you cant open a command prompt on 10s) - see https://github.com/WoofyIO/notepad-plus-plus/blob/master/PowerEditor/src/WinControls/StaticDialog/RunDlg/RunDlg.rc for most of the required changes.
+2. Added the NightRise LLC codesign cert for validation - see https://github.com/WoofyIO/notepad-plus-plus/blob/master/PowerEditor/src/ScitillaComponent/ScintillaEditView.cpp
 3. Edited https://github.com/NightRi-se/notepad-plus-plus/blob/master/appveyor.yml to support building and packaging with makeappx.
-4. The packaging directory, including binary plugins and config files is here: https://github.com/NightRi-se/notepad-plus-plus/tree/master/NightRise.NotepadWrapped
+4. The packaging directory, including binary plugins and config files is here: https://github.com/WoofyIO/notepad-plus-plus/tree/master/NightRise.NotepadWrapped
 
 
 Packaging notes - originally the following applied. Now please see Appveyor for autobuild instructions:
 1. Genuine app was downloaded and unzipped (non-installer version)
 2. the exe was recompiled with listed changes above
 3. exe was replaced in the original app unzipped location
-4. app was packaged using Desktop App Converter (https://docs.microsoft.com/en-us/windows/uwp/porting/desktop-to-uwp-run-desktop-app-converter) - see https://github.com/NightRi-se/notepad-plus-plus/wiki/(Re)Packaging-Instructions
+4. app was packaged using Desktop App Converter (https://docs.microsoft.com/en-us/windows/uwp/porting/desktop-to-uwp-run-desktop-app-converter) - see https://github.com/WoofyIO/notepad-plus-plus/wiki/(Re)Packaging-Instructions
 6. app is published to the store here: https://www.microsoft.com/store/apps/9PLHC123MQWT
 
 All credit to the original team, especially @donho. All licences stay the same (GPL unless otherwise stated).
