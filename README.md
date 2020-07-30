@@ -22,8 +22,6 @@ Packaging notes - originally the following applied. Now please see Appveyor for 
 
 All credit to the original team, especially @donho. All licences stay the same (GPL unless otherwise stated).
 
-If you like this app in the store, please feel free to add your comments to this thread: https://notepad-plus-plus.org/community/topic/14734/notepad-uwp-package-in-windows-store-almost-there
-
 What is Notepad++ ?
 ===================
 
