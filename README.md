@@ -9,7 +9,7 @@ I have cloned the original repo and published changes to support publishing the 
 Current list of changes:
 1. Removal of the run Diag (you cant open a command prompt on 10s) - see https://github.com/WoofyIO/notepad-plus-plus/blob/master/PowerEditor/src/WinControls/StaticDialog/RunDlg/RunDlg.rc for most of the required changes.
 2. Added the NightRise LLC codesign cert for validation - see https://github.com/WoofyIO/notepad-plus-plus/blob/master/PowerEditor/src/ScitillaComponent/ScintillaEditView.cpp
-3. Edited https://github.com/NightRi-se/notepad-plus-plus/blob/master/appveyor.yml to support building and packaging with makeappx.
+3. Edited https://github.com/WoofyIO/notepad-plus-plus/blob/master/appveyor.yml to support building and packaging with makeappx.
 4. The packaging directory, including binary plugins and config files is here: https://github.com/WoofyIO/notepad-plus-plus/tree/master/NightRise.NotepadWrapped
 
 
